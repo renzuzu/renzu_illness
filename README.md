@@ -1,6 +1,16 @@
 # renzu_illness
 Fivem Player Decease and illness. including covid, hepatitis, cough, dengue and more
 
+# Features
+- Job Based Treating Menu
+- Item Based Treatments
+- Multiple Illness Preconfigured. covid,cough, heptatis,tetanus,dengue,chickenpox,diareah and dehydration.
+- Illness are saved locally only
+- Immune System - if immune system is low. players will get sick easily.
+- Face Mask - Avoid Covid virus
+- Immunesystem and immunelevel are saved in esx_status
+- Viral Virus Covid. covid will spread in players if they are not in face mask or lowered immunelevel and system.
+
 # Dependencies
 - ox_lib
 - ox_inventory
