@@ -11,8 +11,8 @@ config = {
 		lib.requestAnimDict(dict)
 		TaskPlayAnim(cache.ped, dict, anim, 1.0, 1.0, -1, 50, 0, false, false, false)
 	end,
-	Walk = function(anim,dict)
-		lib.requestAnimSet(dict)
+	Walk = function(anim)
+		lib.requestAnimSet(anim)
 		SetPedMovementClipset(cache.ped, anim, true)
 		RemoveAnimSet(anim)	
 	end,
