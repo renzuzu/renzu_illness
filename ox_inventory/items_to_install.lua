@@ -95,7 +95,8 @@
 },
 
 ['metronidazole'] = {
-	label = 'Metronidazole is an antibiotic that is used to treat a wide variety of infections. like Tetanus',
+	label = 'Metronidazole',
+	description = 'Metronidazole is an antibiotic that is used to treat a wide variety of infections. like Tetanus',
 	weight = 115,
 	client = {
 		export = 'renzu_illness.useItem',
