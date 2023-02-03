@@ -152,7 +152,7 @@ RunIllness = function()
 		if math.random(1,100) < 5 and isNightandNotInterior() and not LocalPlayer.state.offlotion then
 			Mosquitos()
 		end
-		Wait(10000)
+		Wait(config.tick)
 	end
 end
 
@@ -409,7 +409,7 @@ RegisterNetEvent('esx_status:loaded', function(status) -- register immunesystem 
 		return false
 	end, function(status)
 		local immunelevel = LocalPlayer?.state?.immunelevel or 1
-		local remove = 110
+		local remove = config.immuneremove
 		status.remove(remove - immunelevel)
 	end)
 

@@ -1,5 +1,7 @@
 config = {
 	job = 'ambulance', -- required job to use the menu function for treating patients
+	tick = 10000, -- in milliseconds, affects when the illness runs in client. affects checking and setting illness
+	immuneremove = 110, -- min 1 , max 1000000. how much immune system is removed to player for every esx_status tick?
 	Notify = function(msg)
 		lib.notify({
 			title = 'Illness',
