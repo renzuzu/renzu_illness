@@ -1,5 +1,6 @@
 # renzu_illness
 Fivem Player Decease and illness. including covid, hepatitis, cough, dengue and more
+![image](https://user-images.githubusercontent.com/82306584/216555680-f84ce148-9ef4-4bf6-b094-2fbbf7cca854.png)
 
 # Features
 - Job Based Treating Menu
