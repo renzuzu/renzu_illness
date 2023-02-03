@@ -280,34 +280,6 @@ Status = function(id)
 		id = 'Status',
 		title = 'Patient #'..src..' Status',
 		position = 'top-right',
-		onSideScroll = function(selected, scrollIndex, args)
-			print("Scroll: ", selected, scrollIndex, args)
-		end,
-		onSelected = function(selected, secondary, args)
-			if not secondary then
-				print("Normal button")
-			else
-				if args.isCheck then
-					print("Check button")
-				end
-	
-				if args.isScroll then
-					print("Scroll button")
-				end
-			end
-			print(selected, secondary, json.encode(args, {indent=true}))
-		end,
-		onCheck = function(selected, checked, args)
-			print("Check: ", selected, checked, args)
-			ClearPedTasks(cache.ped)
-		end,
-		onClose = function(keyPressed)
-			print('Menu closed')
-			if keyPressed then
-				print(('Pressed %s to close the menu'):format(keyPressed))
-			end
-			ClearPedTasks(cache.ped)
-		end,
 		options = {
 			{label = 'Immune System', description = ' Immune System', progress = ply.immunesystem or 0.0, colorScheme = 'green', args = 'multivitamins'},
 			{label = 'Diarrhea', description = ' Stomach Health', progress = ply.diarrhea or 0.0, colorScheme = 'orange', args = 'diatabs'},
