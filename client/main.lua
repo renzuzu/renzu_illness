@@ -82,7 +82,7 @@ TreatPatient = function(item)
 	if item == 'antihistamine' then
 		RemoveIllnes('chickenpox')
 	end
-	if item == 'acetaminophe' then
+	if item == 'acetaminophen' then
 		RemoveIllnes('dengue')
 	end
 	if item == 'offlotion' then
@@ -289,7 +289,7 @@ Status = function(id)
 			{label = 'Covid', description = ' Covid Status', progress = ply.covid or 0.0, colorScheme = 'red', args = 'molnupiravir'},
 			{label = 'Tetanus', description = ' Tetanus Status', progress = ply.tetanus or 0.0, args = 'metronidazole'},
 			{label = 'Dehydrated', description = ' Hydro Status', progress = ply.dehydrated or 0.0, args = 'water'},
-			{label = 'Dengue', description = ' Dengue Status', progress = ply.dengue or 0.0, args = 'acetaminophe'},
+			{label = 'Dengue', description = ' Dengue Status', progress = ply.dengue or 0.0, args = 'acetaminophen'},
 		}
 	}, function(selected, scrollIndex, item)
 		print(selected, scrollIndex, item)
