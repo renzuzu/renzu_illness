@@ -34,4 +34,4 @@ Fivem Player Decease and illness. including covid, hepatitis, cough, dengue and 
 # Installation
 - goto /renzu_illness/ox_inventory/items.lua
 - Install the Items to ox_inventory
-- ensure the renzu_illness before ox_lib, ox_inventory, esx_status
+- ensure the renzu_illness after ox_lib, ox_inventory, esx_status
