@@ -35,8 +35,8 @@
 	}
 },
 
-['acetaminophe'] = {
-	label = 'Acetaminophe',
+['acetaminophen'] = {
+	label = 'Acetaminophen',
 	description = 'Helps reduce fever cause by dengue',
 	weight = 115,
 	client = {
