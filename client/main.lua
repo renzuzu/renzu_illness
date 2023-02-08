@@ -13,6 +13,7 @@ end)
 RegisterNetEvent('esx:playerLoaded')
 AddEventHandler('esx:playerLoaded', function(playerData)
     PlayerData = playerData
+	CheckIllness()
 end)
 
 RegisterNetEvent('esx:setJob')
@@ -249,6 +250,7 @@ RegisterCommand('dengue', function(src,args)
 end)
 
 SetIllnes = function(type)
+	local illness = json.decode(GetResourceKvpString('illness') or '[]') or {}
 	Citizen.CreateThreadNow(function()
 		if not LocalPlayer.state[type] then
 			LocalPlayer.state:set(type, 100, true)
@@ -264,14 +266,30 @@ SetIllnes = function(type)
 					--print('adding')
 				end
 			end
+			illness[type] = true
+		else
+			illness[type] = true
 		end
+		SetResourceKvp('illness',json.encode(illness))
 	end)
 end
 
 RemoveIllnes = function(type)
+	local illness = json.decode(GetResourceKvpString('illness') or '[]') or {}
+	illness[type] = false
+	SetResourceKvp('illness',json.encode(illness))
 	return config.removeillness[type]()
 end
 
+CheckIllness = function()
+	Wait(2000) -- wait for status
+	local illness = json.decode(GetResourceKvpString('illness') or '[]') or {}
+	for k,v in pairs(illness) do
+		if v then
+			SetIllnes(k)
+		end
+	end
+end
 
 Status = function(id)
 	local src = id
