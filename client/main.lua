@@ -150,7 +150,7 @@ RunIllness = function()
 		end
 		LocalPlayer.state:set('immunesystem',immunesystem, true)
 		LocalPlayer.state:set('immunelevel',immunelevel, true)
-		if math.random(1,100) < 5 and isNightandNotInterior() and not LocalPlayer.state.offlotion then
+		if math.random(1,100) < 5 and isNightandNotInterior() and not LocalPlayer.state.offlotion then -- and GetNameOfZone(coord.x,coord.y,coord.z) == 'ISHeist
 			Mosquitos()
 		end
 		Wait(config.tick)
@@ -174,7 +174,6 @@ Mosquitos = function(ent)
 	local asset = "core"
 	local particleName = 'ent_amb_insect_swarm'
 	RequestNamedPtfxAsset(asset)
-	print('lamok attack')
 	while not HasNamedPtfxAssetLoaded(asset) do
 		Wait(100)
 	end
@@ -200,7 +199,6 @@ Mosquitos = function(ent)
 end
 
 RegisterNetEvent('ptfxevent', function(data)
-	print('ptfx event', data)
 	if #(GetEntityCoords(cache.ped) - vec3(data.posX,data.posY,data.posZ)) < 20 and immunesystem < 40 then
 		SetIllnes('cough')
 	end
@@ -310,7 +308,6 @@ Status = function(id)
 			{label = 'Dengue', description = ' Dengue Status', progress = ply.dengue or 0.0, args = 'acetaminophen'},
 		}
 	}, function(selected, scrollIndex, item)
-		print(selected, scrollIndex, item)
 		if config.job == PlayerData?.job?.name then
 			local hasitem = lib.callback.await('renzu_illness:hasItem',false,item,src)
 			if hasitem then
@@ -387,13 +384,13 @@ RegisterNetEvent("esx_status:onTick", function(data)
 		end
 		if v.name == 'immunelevel' then
 			immunelevel = v.percent
-			print(immunelevel,'immunelevel')
+			--print(immunelevel,'immunelevel')
 		end
     end
 end)
 
 RegisterNetEvent('esx_status:loaded', function(status) -- register immunesystem and immunelevel as status
-	print('register status events')
+	--print('register status events')
 
 	TriggerEvent('esx_status:registerStatus', 'immunesystem', 1000000, '#0C98F1', function(status)
 		return false
