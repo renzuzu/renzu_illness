@@ -162,6 +162,7 @@ config = {
 		hepatitis = function()
 			local ped = cache.ped
 			local data = LocalPlayer.state.oldhepatitis
+			if not data then return end
 			SetPedHeadBlendData(cache.ped, data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], false)
 			SetPedEyeColor(cache.ped,LocalPlayer.state.eyecolor or 0)
 			LocalPlayer.state:set('oldhepatitis',nil,true)
