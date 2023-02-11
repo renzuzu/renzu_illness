@@ -15,7 +15,6 @@ config = {
 		cough = { immunesystem = 40, chance = 40},
 		chickenpox = { status = 'stress', percent = 50, immunesystem = 50, chance = 50},
 		hepatitis = { status = 'stress', percent = 50, immunesystem = 20, chance = 50},
-		chickenpox = { status = 'stress', percent = 50, immunesystem = 40, chance = 50},
 		mosquito = {chance = 5}, -- chance of spawning mosquito attack
 		dengue = { chance = 7, immunesystem = 40}, -- chances when mosquito bites you
 		tetanus = {chance = 40 }, -- triggered by bulllets
