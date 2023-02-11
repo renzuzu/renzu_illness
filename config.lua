@@ -9,6 +9,18 @@ config = {
 			type = 'inform'
 		})
 	end,
+	trigger = {
+		dehydrated = { status = 'thirst', percent = 30 },
+		diarrhea = { status = 'hunger', percent = 91, immunesystem = 40, chance = 3},
+		cough = { immunesystem = 40, chance = 40},
+		chickenpox = { status = 'stress', percent = 50, immunesystem = 50, chance = 50},
+		hepatitis = { status = 'stress', percent = 50, immunesystem = 20, chance = 50},
+		chickenpox = { status = 'stress', percent = 50, immunesystem = 40, chance = 50},
+		mosquito = {chance = 5}, -- chance of spawning mosquito attack
+		dengue = { chance = 7, immunesystem = 40}, -- chances when mosquito bites you
+		tetanus = {chance = 40 }, -- triggered by bulllets
+		covid = {distance = 5, totalcough = 30}, -- @distance total distance before spreading the virus to other player, totalcough = total amount of cough before having covid
+	},
 	Emotes = function(anim,dict)
 		lib.requestAnimDict(dict)
 		TaskPlayAnim(cache.ped, dict, anim, 1.0, 1.0, -1, 50, 0, false, false, false)
@@ -22,7 +34,7 @@ config = {
 		cough = function()
 			config.Emotes('idle_cough','timetable@gardener@smoking_joint')
 			LocalPlayer.state:set('coughcount',LocalPlayer.state.coughcount and LocalPlayer.state.coughcount + 1 or 1, true)
-			if LocalPlayer.state.coughcount and LocalPlayer.state.coughcount >= 30 then
+			if LocalPlayer.state.coughcount and LocalPlayer.state.coughcount >= trigger.covid.totalcough then
 				config.Notify('You have Major Cough and mucus and hardtime breathing')
 				SetPlayerMaxStamina(PlayerId(),0)
 				LocalPlayer.state:set('covid',100.0,true)

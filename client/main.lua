@@ -96,48 +96,49 @@ RegisterNetEvent('renzu_illness:RemoveIllness',TreatPatient)
 
 RunIllness = function()
 	while PlayerData.job == nil do Wait(111) end	-- make sure player fully loaded before starting loop
+	local trigger = config.trigger
 	while true do
 		local coord = GetEntityCoords(cache.ped)
 		local vehicle = GetClosestVehicle(coord, 10.0)
 		if isNearMuffler(vehicle,coord) then
 			immunesystem -= 0.5
-			if immunesystem <= 0 or immunesystem <= 40 and math.random(1,100) < 40 then
+			if immunesystem <= 0 or immunesystem <= trigger.cough.immunesystem and math.random(1,100) < trigger.cough.chance then
 				SetIllnes('cough')
 			end
 		end
 		if isNightandNotInterior() then
 			immunesystem -= 1.5
-			if immunesystem <= 0 or immunesystem <= 40 and math.random(1,100) < 40 then
+			if immunesystem <= 0 or immunesystem <= trigger.cough.immunesystem and math.random(1,100) < trigger.cough.chance then
 				SetIllnes('cough')
 			end
 		end
-		if stress > 50 then
+		if stress > trigger.chickenpox.percent or stress > trigger.hepatitis.percent or stress > trigger.diarrhea.percent then
 			immunesystem -= 2.5
-			if immunesystem <= 0 or immunesystem <= 50 and math.random(1,100) < 50 then
+			if immunesystem <= 0 or immunesystem <= trigger.chickenpox.immunesystem and math.random(1,100) < trigger.chickenpox.chance then
 				SetIllnes('chickenpox')
 			end
-			if immunesystem <= 0 or immunesystem <= 40 and math.random(1,100) < 50 then
+			if immunesystem <= 0 or immunesystem <= trigger.hepatitis.immunesystem and math.random(1,100) < trigger.hepatitis.chance then
 				SetIllnes('hepatitis')
 			end
-			if immunesystem <= 0 or immunesystem <= 30 and math.random(1,100) < 15 then
+			if immunesystem <= 0 or immunesystem <= trigger.diarrhea.immunesystem and math.random(1,100) < trigger.diarrhea.chance then
 				SetIllnes('diarrhea')
 			end
 		end
-		if drugs > 40 then
+		if drugs > 40 then -- shared config
 			immunesystem -= 1.5
-			if immunesystem <= 0 or immunesystem <= 50 and math.random(1,100) < 50 then
+			if immunesystem <= 0 or immunesystem <= trigger.hepatitis.immunesystem and math.random(1,100) < trigger.hepatitis.chance then
 				SetIllnes('hepatitis')
 			end
-			if immunesystem <= 0 or immunesystem <= 80 and math.random(1,100) < 50 then
+			if immunesystem <= 0 or immunesystem <= trigger.chickenpox.immunesystem and math.random(1,100) < trigger.chickenpox.chance then
 				SetIllnes('chickenpox')
 			end
-			if immunesystem <= 0 or immunesystem <= 50 and math.random(1,100) < 50 then
+			if immunesystem <= 0 or immunesystem <= trigger.diarrhea.immunesystem and math.random(1,100) < trigger.diarrhea.chance then
 				SetIllnes('diarrhea')
 			end
 		end
 		if drunk > 50 then
 			immunesystem -= 1.5
-			if immunesystem <= 0 or immunesystem <= 50 and math.random(1,100) < 50 then
+			if immunesystem <= 0 or immunesystem <= trigger.hepatitis.immunesystem and math.random(1,100) < trigger.hepatitis.chance then
 				SetIllnes('hepatitis')
 				TriggerEvent('esx_status:add','stress',10000)
 			end
@@ -150,7 +151,7 @@ RunIllness = function()
 		end
 		LocalPlayer.state:set('immunesystem',immunesystem, true)
 		LocalPlayer.state:set('immunelevel',immunelevel, true)
-		if math.random(1,100) < 5 and isNightandNotInterior() and not LocalPlayer.state.offlotion then -- and GetNameOfZone(coord.x,coord.y,coord.z) == 'ISHeist
+		if math.random(1,100) < trigger.mosquito.chance and isNightandNotInterior() and not LocalPlayer.state.offlotion then -- and GetNameOfZone(coord.x,coord.y,coord.z) == 'ISHeist
 			Mosquitos()
 		end
 		Wait(config.tick)
@@ -186,7 +187,7 @@ Mosquitos = function(ent)
 	end
 	SetEntityHealth(cache.ped,GetEntityHealth(cache.ped)-2)
 	config.Notify('you have been bited by mosquito')
-	if math.random(1,100) < 7 and immunesystem < 40 then
+	if math.random(1,100) < config.trigger.dengue.chance and immunesystem < config.trigger.dengue.immunesystem then
 		SetIllnes('dengue')
 	end
 	Citizen.Wait(8000)
@@ -199,7 +200,7 @@ Mosquitos = function(ent)
 end
 
 RegisterNetEvent('ptfxevent', function(data)
-	if #(GetEntityCoords(cache.ped) - vec3(data.posX,data.posY,data.posZ)) < 20 and immunesystem < 40 then
+	if #(GetEntityCoords(cache.ped) - vec3(data.posX,data.posY,data.posZ)) < 20 and immunesystem < config.trigger.cough.chance then
 		SetIllnes('cough')
 	end
 end)
@@ -217,7 +218,7 @@ AddEventHandler('gameEventTriggered', function (name, args)
 	if name == 'CEventNetworkEntityDamage' then
 		local victim = args[1]
 		if victim == cache.ped then
-			if HasEntityBeenDamagedByWeapon(cache.ped, 0 , 1) and immunesystem < 40 then
+			if HasEntityBeenDamagedByWeapon(cache.ped, 0 , 1) and immunesystem < config.trigger.tetanus.chance then
 				SetIllnes('tetanus')
 			end
 		end
@@ -259,7 +260,7 @@ SetIllnes = function(type)
 			for k,v in pairs(players) do
 				local ped = GetPlayerPed(k)
 				--print(#(GetEntityCoords(cache.ped) - GetEntityCoords(ped)),Player(v).state.immunesystem)
-				if DoesEntityExist(ped) and #(GetEntityCoords(cache.ped) - GetEntityCoords(ped)) < 5 and not Player(v).state.facemask then
+				if DoesEntityExist(ped) and #(GetEntityCoords(cache.ped) - GetEntityCoords(ped)) < config.trigger.covid.distance and not Player(v).state.facemask then
 					TriggerServerEvent('addcovid', v)
 					--print('adding')
 				end
@@ -358,6 +359,7 @@ exports('Config',config)
 exports('faceMask',faceMask)
 
 RegisterNetEvent("esx_status:onTick", function(data)
+	local trigger = config.trigger
     for _,v in pairs(data) do
         if v.name == 'stress' then
 			stress = v.percent
@@ -368,17 +370,17 @@ RegisterNetEvent("esx_status:onTick", function(data)
 		if v.name == 'drunk' then
 			drunk = v.percent
 		end
-		if v.name == 'thirst' and v.percent < 30 then
+		if v.name == trigger.dehydrated.status and v.percent < trigger.dehydrated.percent then
 			SetIllnes('dehydrated')
-		elseif v.name == 'thirst' and v.percent > 40 and LocalPlayer.state.dehydrated then
+		elseif v.name == trigger.dehydrated.status and v.percent > trigger.dehydrated.percent and LocalPlayer.state.dehydrated then
 			RemoveIllnes('dehydrated')
 		end
 		if v.name == 'immunesystem' then
 			immunesystem = v.percent
 		end
 		--print(v.name,v.percent)
-		if v.name == 'hunger' and v.percent > 91 then
-			if math.random(1,100) < 3 and immunesystem < 40 then
+		if v.name == trigger.diarrhea.status and v.percent > trigger.diarrhea.percent then
+			if math.random(1,100) < trigger.diarrhea.chance and immunesystem < trigger.diarrhea.immunesystem then
 				SetIllnes('diarrhea')
 			end
 		end
