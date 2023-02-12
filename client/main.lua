@@ -151,7 +151,8 @@ RunIllness = function()
 		end
 		LocalPlayer.state:set('immunesystem',immunesystem, true)
 		LocalPlayer.state:set('immunelevel',immunelevel, true)
-		if math.random(1,100) < trigger.mosquito.chance and isNightandNotInterior() and not LocalPlayer.state.offlotion then -- and GetNameOfZone(coord.x,coord.y,coord.z) == 'ISHeist
+		local x, y, z = table.unpack(coord)
+		if math.random(1,100) < trigger.mosquito.chance and isNightandNotInterior() and not LocalPlayer.state.offlotion then -- and GetNameOfZone(x,y,z) == 'ISHEIST'
 			Mosquitos()
 		end
 		Wait(config.tick)
