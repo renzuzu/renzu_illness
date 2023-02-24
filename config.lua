@@ -33,7 +33,7 @@ config = {
 		cough = function()
 			config.Emotes('idle_cough','timetable@gardener@smoking_joint')
 			LocalPlayer.state:set('coughcount',LocalPlayer.state.coughcount and LocalPlayer.state.coughcount + 1 or 1, true)
-			if LocalPlayer.state.coughcount and LocalPlayer.state.coughcount >= trigger.covid.totalcough then
+			if LocalPlayer.state.coughcount and LocalPlayer.state.coughcount >= config.trigger.covid.totalcough then
 				config.Notify('You have Major Cough and mucus and hardtime breathing')
 				SetPlayerMaxStamina(PlayerId(),0)
 				LocalPlayer.state:set('covid',100.0,true)
