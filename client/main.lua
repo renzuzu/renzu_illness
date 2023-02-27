@@ -1,56 +1,3 @@
-ESX = exports['es_extended']:getSharedObject()
-local stress = 0.0
-local drugs = 0.0
-local drunk = 0.0
-local immunesystem = 100.0
-local immunelevel = 0
-local PlayerData = {}
-Citizen.CreateThread(function()
-	Wait(1000)
-	PlayerData = ESX.GetPlayerData()
-end)
-
-RegisterNetEvent('esx:playerLoaded')
-AddEventHandler('esx:playerLoaded', function(playerData)
-    PlayerData = playerData
-	CheckIllness()
-end)
-
-RegisterNetEvent('esx:setJob')
-AddEventHandler('esx:setJob', function(job)
-	PlayerData.job = job
-end)
-
-function GetClosestVehicle(c,dist)
-	local closest = 0
-	for k,v in pairs(GetGamePool('CVehicle')) do
-		local dis = #(GetEntityCoords(v) - c)
-		if dis < dist 
-		    or dist == -1 then
-			closest = v
-			dist = dis
-		end
-	end
-	return closest, dist
-end
-
-isNearMuffler = function(entity,coords)
-	local boneId = GetEntityBoneIndexByName(entity, 'boot')
-	local indist = #(coords - GetWorldPositionOfEntityBone(entity, boneId)) < 11.0 and GetIsVehicleEngineRunning(entity)
-	return indist
-end
-
-local debug = false
-
-isNightandNotInterior = function()
-	local hour = GetClockHours()
-	local in_interior = GetInteriorFromEntity(cache.ped) ~= 0
-	if debug then
-		print(hour,'current time')
-	end
-	return not in_interior and hour > 18 or not in_interior and hour > 1 and hour < 7
-end
-
 local usingitem = false
 exports('useItem', function(data, slot)
     exports.ox_inventory:useItem(data, function(data)
@@ -408,3 +355,34 @@ RegisterNetEvent('esx_status:loaded', function(status) -- register immunesystem 
 	end, function(status)
 	end)
 end)
+
+
+function GetClosestVehicle(c,dist)
+	local closest = 0
+	for k,v in pairs(GetGamePool('CVehicle')) do
+		local dis = #(GetEntityCoords(v) - c)
+		if dis < dist 
+		    or dist == -1 then
+			closest = v
+			dist = dis
+		end
+	end
+	return closest, dist
+end
+
+isNearMuffler = function(entity,coords)
+	local boneId = GetEntityBoneIndexByName(entity, 'boot')
+	local indist = #(coords - GetWorldPositionOfEntityBone(entity, boneId)) < 11.0 and GetIsVehicleEngineRunning(entity)
+	return indist
+end
+
+local debug = false
+
+isNightandNotInterior = function()
+	local hour = GetClockHours()
+	local in_interior = GetInteriorFromEntity(cache.ped) ~= 0
+	if debug then
+		print(hour,'current time')
+	end
+	return not in_interior and hour > 18 or not in_interior and hour > 1 and hour < 7
+end
