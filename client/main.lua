@@ -42,7 +42,7 @@ exports('TreatPatient',TreatPatient)
 RegisterNetEvent('renzu_illness:RemoveIllness',TreatPatient)
 
 RunIllness = function()
-	while PlayerData.job == nil do Wait(111) end	-- make sure player fully loaded before starting loop
+	while PlayerData?.job == nil do Wait(111) end	-- make sure player fully loaded before starting loop
 	local trigger = config.trigger
 	while true do
 		local coord = GetEntityCoords(cache.ped)
