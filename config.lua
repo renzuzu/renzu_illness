@@ -72,7 +72,7 @@ config = {
 			SetPedHeadOverlay(ped,0,18,1.0)
 		end,
 		diarrhea = function()
-			config.Emotes('kylie_clip','sitkylie@queensisters')
+			--config.Emotes('kylie_clip','sitkylie@queensisters')
 			if not config.countToPoop then
 				config.countToPoop = 0
 			end
