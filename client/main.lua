@@ -308,7 +308,14 @@ exports('faceMask',faceMask)
 
 RegisterNetEvent("esx_status:onTick", function(data)
 	local trigger = config.trigger
-    for _,v in pairs(data) do
+	local status = data
+	if data[1] == nil then
+		status = {}
+		for k,v in pairs(data) do
+			table.insert(status,{name = k, percent = v / 10000})
+		end
+	end
+    for _,v in pairs(status) do
         if v.name == 'stress' then
 			stress = v.percent
 		end
@@ -326,7 +333,6 @@ RegisterNetEvent("esx_status:onTick", function(data)
 		if v.name == 'immunesystem' then
 			immunesystem = v.percent
 		end
-		--print(v.name,v.percent)
 		if v.name == trigger.diarrhea.status and v.percent > trigger.diarrhea.percent then
 			if math.random(1,100) < trigger.diarrhea.chance and immunesystem < trigger.diarrhea.immunesystem then
 				SetIllnes('diarrhea')
@@ -334,7 +340,6 @@ RegisterNetEvent("esx_status:onTick", function(data)
 		end
 		if v.name == 'immunelevel' then
 			immunelevel = v.percent
-			--print(immunelevel,'immunelevel')
 		end
     end
 end)

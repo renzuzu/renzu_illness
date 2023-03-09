@@ -34,16 +34,15 @@ config = {
 			config.Emotes('idle_cough','timetable@gardener@smoking_joint')
 			LocalPlayer.state:set('coughcount',LocalPlayer.state.coughcount and LocalPlayer.state.coughcount + 1 or 1, true)
 			if LocalPlayer.state.coughcount and LocalPlayer.state.coughcount >= config.trigger.covid.totalcough then
-				config.Notify('You have Major Cough and mucus and hardtime breathing')
 				SetPlayerMaxStamina(PlayerId(),0)
 				LocalPlayer.state:set('covid',100.0,true)
 			end
-			print(LocalPlayer.state.coughcount,'count')
 		end,
 		covid = function()
 			config.Emotes('idle_cough','timetable@gardener@smoking_joint')
 			if math.random(1,100) < 10 then
 				SetEntityHealth(cache.ped, GetEntityHealth(cache.ped) - 1)
+				print('health reduce')
 				TriggerEvent('esx_status:add', 'stress',10000)
 				TriggerEvent('esx_status:remove', 'thirst',20000)
 				config.Notify('Health is getting degenerated')
@@ -54,6 +53,7 @@ config = {
 					lib.requestAnimDict('random@drunk_driver_1')
 					TaskPlayAnim(cache.ped, 'random@drunk_driver_1', "vomit_low", 2.0, 2.0, -1, 50, 0, false, false, false)
 				end)
+				config.Notify('You have Major Cough and mucus and hardtime breathing')
 			end
 		end,
 		chickenpox = function()
