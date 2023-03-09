@@ -1,9 +1,9 @@
-local stress = 0.0
-local drugs = 0.0
-local drunk = 0.0
-local immunesystem = 100.0
-local immunelevel = 0
-local PlayerData = {}
+stress = 0.0
+drugs = 0.0
+drunk = 0.0
+immunesystem = 100.0
+immunelevel = 0
+PlayerData = {}
 if GetResourceState('es_extended') == 'started' then
 	ESX = exports['es_extended']:getSharedObject()
 	PlayerData = ESX.GetPlayerData()

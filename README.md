@@ -15,7 +15,7 @@ Fivem Player Decease and illness. including covid, hepatitis, cough, dengue and 
 # Dependencies
 - ox_lib
 - ox_inventory
-- ESX Framework Legacy
+- ESX Framework Legacy / QBCORE (with ox_inventory)
 - esx_status
 
 # exports and commands
